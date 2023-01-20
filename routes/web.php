@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\BlogController;
+use App\Http\Controllers\Web\ProjectController;
 use App\Http\Controllers\Api\Client\CommentController;
 
 /*
@@ -20,10 +21,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth'])->name('dashboard');
 
-Route::get('/die-dump', [CommentController::class, 'getBlogComments'])->middleware(['auth'])->name('dashboard');
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+    Route::get('/projects', [ProjectController::class, 'showAllProjects'])->name('projects');
+    
+    Route::get('/projects/{project}/edit', [ProjectController::class, 'showEditForm']);
+    Route::put('/projects/{project}/edit', [ProjectController::class, 'updateProject']);
+});
 
 require __DIR__.'/auth.php';
+require __DIR__.'/lwire.php';

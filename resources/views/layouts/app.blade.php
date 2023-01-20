@@ -9,18 +9,20 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
-        <script src="//unpkg.com/alpinejs" defer></script>
+        {{-- <script src="//unpkg.com/alpinejs" defer></script> --}}
 
 
-          <!-- Styles -->
-          <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-          <!-- @livewireStyles -->
-      
-          <!-- Scripts -->
-          <script src="{{ asset('js/app.js') }}" defer></script>
-
+        <!-- Styles -->
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+        {{-- @vite('resources/css/app.css') --}}
+        @livewireStyles
+    
         <!-- Scripts -->
         <!-- @vite(['resources/css/app.css', 'resources/js/app.js']) -->
+
+        
+
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
@@ -34,9 +36,20 @@
             </header>
 
             <!-- Page Content -->
-            <main>
-                {{ $slot }}
+            <main id="app">
+                <div class="py-2">
+                    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                        <div class="bg-white shadow-sm rounded-sm">
+                            <div class="p-6 border-b">
+                            {{ $slot }}
+                        </div>
+                    </div>
+                </div>
             </main>
-        </div>
+        </div>  
+
+        <x-partials.alert/>
+        <script src="{{ asset('js/app.js') }}" defer></script>
+        @livewireScripts
     </body>
 </html>

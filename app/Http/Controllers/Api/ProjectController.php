@@ -79,7 +79,7 @@ class ProjectController extends Controller
         return response('Project Deleted', 200);
     }
 
-    // Blog custom resource
+    // Project custom resource
     private function ProjectCustomResource($request){
         $valid = $request->validate([
             'title' => 'required|max:1000',
