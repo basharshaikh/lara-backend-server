@@ -1,16 +1,18 @@
 <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        {{ __('All Products') }}
+        {{ __('All Products') }}<br> <small class="text-slate-500">Product list | livewire</small>
     </h2>
 </x-slot>
 
 <div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:grid-cols-1 md:grid-cols-2 justify-items-stretch">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-5 sm:grid-cols-1 md:grid-cols-4 justify-items-stretch border-b mb-3">
         <div>
-            <x-partials.field-label text="Filter product"/>
-            <input type="text" wire:model="search" name="search" class="{{defaut_class('inputField')}} " placeholder="Search"/>
+            <input type="text" wire:model="search" name="search" class="vbc-input-field" placeholder="Search product"/>
         </div>
+
+        <div></div>
+        <div></div>
 
         <div class="justify-self-end">
             <a href="/add-product"><x-partials.button type="button" text="Add New"/></a>

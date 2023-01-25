@@ -1,6 +1,7 @@
 <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        {{ __('Add Product') }}
+        {{ __('Add Product') }} <br>
+        <small class="text-slate-600">New product | livewire</small>
     </h2>
 </x-slot>
 
@@ -19,7 +20,7 @@
                     @error('title')
                     <p class="text-red-500 text-xs mt-1">{{$message}}</p>
                     @enderror
-                    <input type="text" wire:model="title" name="title" class="{{defaut_class('inputField')}}" placeholder="Product title" />
+                    <input type="text" wire:model="title" name="title" class="vbc-input-field" placeholder="Product title" />
                 </div>
 
                 <div>
@@ -27,7 +28,7 @@
                     @error('price')
                     <p class="text-red-500 text-xs mt-1">{{$message}}</p>
                     @enderror
-                    <input type="number" wire:model="price" name="price" class="{{defaut_class('inputField')}}" placeholder="Price" />
+                    <input type="number" wire:model="price" name="price" class="vbc-input-field" placeholder="Price" />
                 </div>
 
                 <div class="pt-3" wire:ignore>
@@ -43,7 +44,7 @@
                     @error('excerpt')
                     <p class="text-red-500 text-xs mt-1">{{$message}}</p>
                     @enderror
-                    <textarea wire:model="excerpt" name="excerpt" cols="30" rows="10" class="{{defaut_class('inputField')}}" placeholder="Product excerpt"></textarea>
+                    <textarea wire:model="excerpt" name="excerpt" cols="30" rows="10" class="vbc-input-field" placeholder="Product excerpt"></textarea>
                 </div>
             </div>
         </div>
@@ -61,7 +62,7 @@
                             @error('status')
                             <p class="text-red-500 text-xs mt-1">{{$message}}</p>
                             @enderror
-                            <select wire:model="status" name="status" class="{{defaut_class('inputField')}} pr-8">
+                            <select wire:model="status" name="status" class="vbc-input-field !pr-8">
                                 <option value="publish">Publish</option>
                                 <option value="draft">Draft</option>
                             </select>

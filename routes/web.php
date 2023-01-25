@@ -17,15 +17,17 @@ use App\Http\Controllers\Api\Client\CommentController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth'])->name('dashboard');
 
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('/', function () {
+        return redirect('/dashboard');
+    });
+
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');

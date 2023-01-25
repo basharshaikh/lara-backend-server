@@ -38,6 +38,7 @@
                     <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="remember">
                     <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
                 </label>
+                <p class="text-sm">Don't have an account? <a href="/register">Register here</a></p>
             </div>
 
             <div class="flex items-center justify-end mt-4">

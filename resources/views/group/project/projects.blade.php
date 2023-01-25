@@ -2,7 +2,7 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight inline-block">
             {{ __('Projects') }} 
-        </h2><small> Project list.</small>
+        </h2><br><small> Project list | blade</small>
     </x-slot>
 
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-5 sm:grid-cols-1 md:grid-cols-2">       
@@ -32,5 +32,9 @@
         </div>
         @endforeach 
     </div>
+    {{-- Pagination --}}
+    <div class="mt-6">
+        {{$projects}}
     </div>
+</div>
 </x-app-layout>

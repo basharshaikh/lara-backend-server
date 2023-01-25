@@ -9,12 +9,14 @@ use App\Http\Controllers\Controller;
 class ProjectController extends Controller
 {
     public function showAllProjects(){
-        $data = Project::latest()->paginate(6);
+        $data = Project::latest()->paginate(8);
         // var_dump($data);
-        return view('projects', [
+        return view('group.project.projects', [
             'projects' => $data
         ]);
     }
+
+
 
     public function showEditForm(Project $project){
         return view('group.project.edit', [

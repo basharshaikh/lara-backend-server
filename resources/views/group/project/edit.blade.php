@@ -2,7 +2,7 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight inline-block">
             {{ __('Projects') }} 
-        </h2><small> Project list.</small>
+        </h2><br><small> Edit project | blade</small>
     </x-slot>
 
     <form class="space-y-6" action="/projects/{{$project->id}}/edit" method="post">
@@ -21,25 +21,25 @@
                     @error('title')
                     <p class="text-red-500 text-xs mt-1">{{$message}}</p>
                     @enderror
-                    <input type="text" name="title" value="{{$project->title}}" class="{{defaut_class('inputField')}}" placeholder="Project title" />
+                    <input type="text" name="title" value="{{$project->title}}" class="vbc-input-field" placeholder="Project title" />
                 </div>
 
                 <div class="pt-3">
                     <x-partials.field-label text="Project Description" />
                     <input type="hidden" name="description">
                     <div id="editor" style="height: 200px">
-                        
+                        {{-- quill editor --}}
                     </div>
                 </div>
 
                 <div class="pt-3">              
                     <x-partials.field-label text="Project Excerpt"/>
-                    <textarea name="excerpt" cols="30" rows="10" class="{{defaut_class('inputField')}}" placeholder="Project excerpt">{{$project->excerpt}}</textarea>
+                    <textarea name="excerpt" cols="30" rows="10" class="vbc-input-field" placeholder="Project excerpt">{{$project->excerpt}}</textarea>
                 </div>
 
                 <div  class="pt-3">
                     <x-partials.field-label text="Project Label"/>
-                    <input type="text" name="label" value="{{$project->label}}" class="{{defaut_class('inputField')}}" placeholder="Project label" />
+                    <input type="text" name="label" value="{{$project->label}}" class="vbc-input-field" placeholder="Project label" />
                 </div>
             </div>
         </div>
@@ -54,7 +54,7 @@
                 <div class="p-3">
                     <div class="w-[60%] inline-block">
                         <div class="inline-block">
-                            <select name="status" class="{{defaut_class('inputField')}} pr-8">
+                            <select name="status" class="vbc-input-field !pr-8">
                                 <option {{($project->status == 'publish') ? 'selected' : ''}} value="publish">Publish</option>
                                 <option {{($project->status == 'draft') ? 'selected' : ''}} value="draft">Draft</option>
                             </select>
@@ -87,8 +87,8 @@
 
                     <template x-for="(ingredient, index) in ingredients">
                     <div class="flex">
-                        <input x-model="ingredient.color" type="text" class="{{defaut_class('inputField')}} w-[85px]" :style="`background: ${ingredient.color}`">
-                        <input x-model="ingredient.text" :id="ingredient.id" type="text" class="{{defaut_class('inputField')}}" placeholder="ingredient" :value="ingredient.text"/>
+                        <input x-model="ingredient.color" type="text" class="vbc-input-field w-[85px]" :style="`background: ${ingredient.color}`">
+                        <input x-model="ingredient.text" :id="ingredient.id" type="text" class="vbc-input-field" placeholder="ingredient" :value="ingredient.text"/>
 
                         <!-- add ingre -->
                         <button @click="ingredients.splice(index, 0, {id: uuidv4(), text: 'Laravel', color: '#333'})" type="button" class="bg-blue-900 p-2 px-3 inline-block h-[39px] relative -top-[1px] border rounded-sm cursor-pointer">
@@ -142,8 +142,5 @@
         console.log(editor.getContents())
         description.value = JSON.stringify(editor.getContents())
     });
-
-
-    
 </script>
 </x-app-layout>
