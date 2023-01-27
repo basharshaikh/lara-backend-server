@@ -4,7 +4,9 @@
             {{ __('Projects') }} 
         </h2><br><small> Project list | blade</small>
     </x-slot>
+    
 
+    @if(count($projects))
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-5 sm:grid-cols-1 md:grid-cols-2">       
         @foreach($projects as $project)
         <div class="project-item bg-[#FEFFE1] rounded-sm overflow-hidden">
@@ -36,5 +38,10 @@
     <div class="mt-6">
         {{$projects}}
     </div>
+    @else
+       <x-partials.emptyAlert>
+        <p>No project found!</p>
+       </x-partials.emptyAlert>
+    @endif
 </div>
 </x-app-layout>

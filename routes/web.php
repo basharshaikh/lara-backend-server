@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\BlogController;
 use App\Http\Controllers\Web\ProjectController;
+use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Api\Client\CommentController;
 
 /*
@@ -28,9 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
         return redirect('/dashboard');
     });
 
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'getDashboardData'])->name('dashboard');
 
     Route::get('/projects', [ProjectController::class, 'showAllProjects'])->name('projects');
     

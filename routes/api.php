@@ -64,6 +64,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/assign-caps-onrole', [UserManagerController::class, 'AssignCapsInRole']);
     Route::post('/permissions-from-role', [UserManagerController::class, 'PermissionsFromRole']);
     Route::get('/current-user', [UserManagerController::class, 'CurrentUserData']);
+    Route::get('/total-user-count', [UserManagerController::class, 'TotalUserCount']);
 });
 
 Route::post('/register', [AuthController::class, 'register']);

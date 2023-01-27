@@ -16,14 +16,3 @@ if (! function_exists('featured_img_url')) {
         return;
     }
 }
-
-// Get last project 
-if(!function_exists('last_project')){
-    function last_project(){
-        $user = Auth::user();
-        if($user->hasRole('Super-Admin')){
-            return Project::latest()->first();
-        }
-        return;
-    }
-}

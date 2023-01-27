@@ -218,8 +218,13 @@ class UserManagerController extends Controller
             "user" => [
                 "data" => $user,
                 "roles" => $userRoles,
-                "capable" => $userCaps
+                "capable" => $userCaps,
             ]
         ];
+    }
+
+    // Get total user count
+    public function TotalUserCount(){
+        return User::all()->count();
     }
 }

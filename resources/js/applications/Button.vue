@@ -2,9 +2,11 @@
     <button 
     :type="type" 
     :style="`color: ${Tcolor}; background: ${BGcolor}`"
-    class="py-2 px-4 rounded-sm border border-transparent text-sm font-medium transition">
+    class="h-full py-2 px-4 rounded-sm border border-transparent text-sm font-medium transition">
         {{text}}
     </button>
+
+    
 </template>
 <style scoped>
 button:hover{
