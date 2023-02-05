@@ -2,11 +2,12 @@
 
 namespace App\Http\Resources\Client;
 
-use Illuminate\Http\Resources\Json\JsonResource;
-use App\Models\MediaLibrary;
-use App\Models\BlogCategory;
+use DateTime;
 use App\Models\User;
 use App\Models\Comment;
+use App\Models\BlogCategory;
+use App\Models\MediaLibrary;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class BlogResource extends JsonResource
 {
@@ -47,13 +48,14 @@ class BlogResource extends JsonResource
             'mediaID' => $featured_id,
             'catsInfo' => $cat_info,
             'catID' => $cats_id_arr,
-            'author' => User::findOrFail($this->user_id)->only('id', 'name', 'email'),
+            'author' => $this->user,
             'comments' => Comment::where([
                 ['blog_id', $this->id],
                 ['parent_id', null]
             ])->with('user:id,name', 'replies.user:id,name', 'replies.replies.user:id,name')
             ->orderBy('created_at', 'desc')
-            ->get()
+            ->get(),
+            'created_at' => (new DateTime($this->created_at))->format('Y-m-d H:i:s'),
         ];
     }
 }

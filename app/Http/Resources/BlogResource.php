@@ -2,9 +2,10 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\JsonResource;
-use App\Models\MediaLibrary;
+use DateTime;
 use App\Models\BlogCategory;
+use App\Models\MediaLibrary;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class BlogResource extends JsonResource
 {
@@ -45,6 +46,8 @@ class BlogResource extends JsonResource
             'mediaID' => $featured_id,
             'catsInfo' => $cat_info,
             'catID' => $cats_id_arr,
+            'author' => $this->user,
+            'created_at' => (new DateTime($this->created_at))->format('Y-m-d H:i:s'),
         ];
     }
 }

@@ -14,4 +14,14 @@ class ProjectController extends Controller
         $data = ProjectResource::collection(Project::latest()->paginate(4));
         return $data;
     }
+    // Get all projects by one 
+    public function allProjectsByOne(){
+        $data = ProjectResource::collection(Project::latest()->paginate(1));
+        return $data;
+    }
+
+    // Get single project
+    public function getSingleProject(Project $project){
+        return new ProjectResource($project);
+    }
 }

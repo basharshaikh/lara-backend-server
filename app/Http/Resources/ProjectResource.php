@@ -2,9 +2,10 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\MediaResource;
+use DateTime;
 use App\Models\MediaLibrary;
+use App\Http\Resources\MediaResource;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 
 
@@ -39,6 +40,7 @@ class ProjectResource extends JsonResource
             'excerpt' => $this->excerpt,
             'mediaUrl' => $featured,
             'mediaID' => $featured_id,
+            'created_at' => (new DateTime($this->created_at))->format('Y-m-d H:i:s'),
         ];
     }
 }

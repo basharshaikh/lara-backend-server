@@ -28,13 +28,13 @@ class CommentController extends Controller
         $valid = $request->validate([
             'commentText' => 'required|max:1000',
             'blogID' => 'required|integer',
-            'parentID' => 'nullable|integer'
+            'parentID' => 'nullable|integer',
+            'userId' => 'required|integer'
         ]);
 
         $data = [
             'comment' => $valid['commentText'],
-            'user_id' => 5,
-            // 'user_id' => $request->user()->id,
+            'user_id' => $valid['userId'],
             'blog_id' => $valid['blogID'],
             'parent_id' => $valid['parentID']
         ];
