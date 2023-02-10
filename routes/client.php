@@ -23,3 +23,6 @@ Route::post('/comment-post', [CommentController::class, 'postComment']);
 
 // Contact routes
 Route::post('/customer-contact', [ContactController::class, 'createContactFromCustomer']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/contact-form-res', [ContactController::class, 'contactFormResponses']);
+});

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProjectResource;
+use App\Http\Resources\ProjectMinimalResource;
 use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Http\Requests\UpdateProjectRequ;
@@ -20,7 +21,7 @@ class ProjectController extends Controller
     {
         $user = $request->user();
         if($user->can('can_update_project')){
-            return ProjectResource::collection(Project::latest()->paginate(6));
+            return ProjectMinimalResource::collection(Project::latest()->paginate(6));
         }
         return response("No access", 403);
     }
