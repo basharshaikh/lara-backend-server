@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\MediaLibrary;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
+use App\Http\Controllers\Controller;
 
 class MediaLibraryController extends Controller
 {
@@ -40,7 +41,15 @@ class MediaLibraryController extends Controller
 
     // Get all Media 
     public function getAllMedia(){
-        return MediaLibrary::latest()->with('media', 'media')->paginate(32);
+        $medias = MediaLibrary::latest()->with('media', 'media')->paginate(32);
+        
+        // $posts = Post::paginate(10);
+        $medias->map(function ($media) {
+            $media->media_url = URL::to('/').'/storage/'.$media->id.'/'.$media->name;
+            return $media;
+        });
+        
+        return $medias;
     }
 
     // Get single Media 
@@ -49,7 +58,7 @@ class MediaLibraryController extends Controller
 
         return [
             'alt' => $singleMedia['alt'],
-            'url' => $singleMedia['media'][0]['original_url'],
+            'url' => URL::to('/').'/storage/'.$singleMedia['id'].'/'.$singleMedia['name']
         ];
     }
 

@@ -15,9 +15,18 @@ class ContactController extends Controller
             'email' => 'required|email|string',
             'phone' => 'nullable|string|max:1000',
             'website' => 'nullable|string|max:1000',
+            'subject' => 'nullable|string|max:1000',
             'description' => 'required|string'
         ]);
         Contact::create($data);
         return "Thank you for contact me!";
+    }
+
+
+    // get all response from contact form
+    public function contactFormResponses(Request $request){
+        $data = Contact::orderBy('created_at', 'desc')->get();
+
+        return $data;
     }
 }

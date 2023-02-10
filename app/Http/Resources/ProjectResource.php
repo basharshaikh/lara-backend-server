@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use DateTime;
 use App\Models\MediaLibrary;
+use Illuminate\Support\Facades\URL;
 use App\Http\Resources\MediaResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,11 +21,11 @@ class ProjectResource extends JsonResource
     public function toArray($request)
     {
         // return parent::toArray($request); //When no need transformation
-
+        
         $featured_id = $this->featured_image;
         if($featured_id){
             $featured = MediaLibrary::where('id', $featured_id)->with('media', 'media')->first();
-            $featured = $featured['media'][0]['original_url'];
+            $featured = URL::to('/').'/storage/'.$featured->id.'/'.$featured->name;
         } else {
             $featured = '';
         }
