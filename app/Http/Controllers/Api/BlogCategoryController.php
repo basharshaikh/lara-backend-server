@@ -15,16 +15,19 @@ class BlogCategoryController extends Controller
             'title' => 'required|max:1000',
             'description' => 'nullable|string'
         ]);
-
         return $validated;
     }
 
     //add blog category
     public function addBlogCategory(Request $request){
-        $data = $this->categoryData($request);
-        $cat = BlogCategory::create($data);
-
-        return response('Category inserted', 200);
+        $user = $request->user();
+        if($user->can('Edit Category')){
+            $data = $this->categoryData($request);
+            $cat = BlogCategory::create($data);
+    
+            return response('Category inserted', 200);
+        }
+        return response('You don\'t have permission yet!', 403);
     }
 
     // Get all categories
@@ -39,15 +42,22 @@ class BlogCategoryController extends Controller
 
     // update single category
     public function updateCategory(Request $request, BlogCategory $blogCat){
-
-        $data = $this->categoryData($request);
-        $blogCat->update($data);
-        return response('Category Updated', 200);
+        $user = $request->user();
+        if($user->can('Edit Category')){
+            $data = $this->categoryData($request);
+            $blogCat->update($data);
+            return response('Category Updated', 200);
+        }
+        return response('You don\'t have permission yet!', 403);
     }
 
     // delete the category
-    public function deleteBlogCat(BlogCategory $blogCat){
-        $blogCat->delete();
-        return response('Category Deleted', 200);
+    public function deleteBlogCat(BlogCategory $blogCat, Request $request){
+        $user = $request->user();
+        if($user->can('Delete Category')){
+            $blogCat->delete();
+            return response('Category Deleted', 200);
+        }
+        return response('You don\'t have permission yet!', 403);
     }
 }

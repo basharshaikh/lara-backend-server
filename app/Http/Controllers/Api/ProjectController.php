@@ -20,7 +20,7 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
-        if($user->can('can_update_project')){
+        if($user->can('Edit Project')){
             return ProjectMinimalResource::collection(Project::latest()->paginate(6));
         }
         return response("No access", 403);
@@ -35,7 +35,7 @@ class ProjectController extends Controller
     public function store(Request $request, Project $project)
     {
         $user = $request->user();
-        if($user->can('can_add_project') || $user->can('can_update_project') || $user->can('can_delete_project')){
+        if($user->can('Edit Project')){
             $data = $this->ProjectCustomResource($request);
             $project = Project::create($data);
             return response('Project inserted', 200);
@@ -63,9 +63,13 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        $data = $this->ProjectCustomResource($request);
-        $project->update($data);
-        return response('Project updated', 200);
+        $user = $request->user();
+        if($user->can('Edit Project')){
+            $data = $this->ProjectCustomResource($request);
+            $project->update($data);
+            return response('Project updated', 200);
+        }
+        return response("No access", 403);
     }
 
     /**
@@ -74,10 +78,14 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        Project::find($id)->delete();
-        return response('Project Deleted', 200);
+        $user = $request->user();
+        if($user->can('Edit Project')){
+            Project::find($id)->delete();
+            return response('Project Deleted', 200);
+        }
+        return response("No access", 403);
     }
 
     // Project custom resource
@@ -89,6 +97,8 @@ class ProjectController extends Controller
             'ingredients' => 'nullable|string',
             'label' => 'nullable|string',
             'excerpt' => 'nullable|string',
+            'video_overview' => 'nullable|string',
+            'live_url' => 'nullable|string',
             'mediaID' => 'nullable|integer'
         ]);
 
@@ -100,6 +110,8 @@ class ProjectController extends Controller
             'label' => $valid['label'],
             'excerpt' => $valid['excerpt'],
             'featured_image' => $valid['mediaID'],
+            'video_overview_url' => $valid['video_overview'],
+            'project_live_url' => $valid['live_url'],
         ];
 
         return $data;

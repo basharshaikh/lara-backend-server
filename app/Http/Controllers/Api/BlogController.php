@@ -21,7 +21,7 @@ class BlogController extends Controller
         }
 
         // for blogger
-        if($user->can('edit_blog')){
+        if($user->can('Edit Blog')){
             return BlogResource::collection(Blog::where('user_id', $user->id)->paginate(3));
         }
         
@@ -36,20 +36,32 @@ class BlogController extends Controller
 
     // Insert a blog
     public function addBlog(Request $request){
-        $blog = Blog::create($this->BlogCustomResource($request));
-        return response('Blog inserted successfully', 200);
+        $user = $request->user();
+        if($user->can('Edit Blog')){
+            $blog = Blog::create($this->BlogCustomResource($request));
+            return response('Blog inserted successfully', 200);
+        }
+        return response('You don\'t have permission yet!', 403);
     }
 
     // Update Blog
     public function updateSingleBlog($id, Blog $blog, Request $request){
-        Blog::find($id)->update($this->BlogCustomResource($request));
-        return response('Blog Updated', 200);
+        $user = $request->user();
+        if($user->can('Edit Blog')){
+            Blog::find($id)->update($this->BlogCustomResource($request));
+            return response('Blog Updated', 200);
+        }
+        return response('You don\'t have permission yet!', 403);
     }
 
     // Delete blog
-    public function deleteSingleBlog($id){
-        Blog::find($id)->delete();
-        return response('Blog Deleted', 200);
+    public function deleteSingleBlog($id, Request $request){
+        $user = $request->user();
+        if($user->can('delete_blog')){
+            Blog::find($id)->delete();
+            return response('Blog Deleted', 200);
+        }
+        return response('You don\'t have permission yet!', 403);
     }
 
     // Blog comments

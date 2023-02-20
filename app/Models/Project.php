@@ -15,7 +15,7 @@ class Project extends Model implements HasMedia
 
     protected $table = 'projects';
 
-    protected $fillable = ['title', 'description', 'status', 'ingredients', 'label', 'excerpt', 'featured_image'];
+    protected $fillable = ['title', 'description', 'status', 'ingredients', 'label', 'excerpt', 'featured_image', 'video_overview_url', 'project_live_url'];
 
 }
 

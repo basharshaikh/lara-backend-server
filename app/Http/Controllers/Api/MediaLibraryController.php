@@ -15,7 +15,6 @@ class MediaLibraryController extends Controller
         $base64_file_arr = $request->base;
         $file_name_full_arr = $request->name;
         $count = -1;
-        $sdkhfjdsh = [];
         foreach($base64_file_arr as $base64_file){
             $count++;
             $file_info = $this->process_img($base64_file, $file_name_full_arr[$count]);
@@ -63,10 +62,14 @@ class MediaLibraryController extends Controller
     }
 
     // Delete single media
-    public function DeleteSingleMedia($id, MediaLibrary $mediaLibrary){
-        $data = MediaLibrary::find($id);
-        $data->delete();
-        return response("Media deleted!", 200);
+    public function DeleteSingleMedia($id, MediaLibrary $mediaLibrary, Request $request){
+        $user = $request->user();
+        if($user->can('Delete Media')){
+            $data = MediaLibrary::find($id);
+            $data->delete();
+            return response("Media deleted!", 200);
+        }
+        return response('You don\'t have permission yet!', 403);
     }
 
 
@@ -87,7 +90,7 @@ class MediaLibraryController extends Controller
             $file_ext = pathinfo($file_name_full, PATHINFO_EXTENSION);
 
             // Check if file is an image
-            if (!in_array($file_ext, ['jpg', 'jpeg', 'gif', 'png'])) {
+            if (!in_array($file_ext, ['jpg', 'jpeg', 'gif', 'png', 'mkv'])) {
                 throw new \Exception('invalid image type');
             }
         } else {

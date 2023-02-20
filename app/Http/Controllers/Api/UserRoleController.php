@@ -26,13 +26,15 @@ class UserRoleController extends Controller
      */
     public function store(Request $request)
     {
-        $valid = $request->validate([
-            'name' => 'required|string|max:1000'
-        ]);
-
-        Role::create(['name' => $valid['name'], 'guard_name' => 'web']);
-        
-        return response("Role added!", 200);
+        $user = $request->user();
+        if($user->can('Edit Role')){
+            $valid = $request->validate([
+                'name' => 'required|string|max:1000'
+            ]);
+            Role::create(['name' => $valid['name'], 'guard_name' => 'web']);
+            return response("Role added!", 200);
+        }
+        return response('You don\'t have permission yet!', 403);
     }
 
     /**
@@ -44,16 +46,20 @@ class UserRoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $valid = $request->validate([
-            'name' => 'required|string|max:1000'
-        ]);
-        $data = [
-            'name' => $valid['name'],
-            'guard_name' => 'web'
-        ];
-        Role::find($id)->update($data);
-
-        return response("Role Updated", 200);
+        $user = $request->user();
+        if($user->can('Edit Role')){
+            $valid = $request->validate([
+                'name' => 'required|string|max:1000'
+            ]);
+            $data = [
+                'name' => $valid['name'],
+                'guard_name' => 'web'
+            ];
+            Role::find($id)->update($data);
+    
+            return response("Role Updated", 200);
+        }
+        return response('You don\'t have permission yet!', 403);
     }
 
     /**
@@ -62,9 +68,13 @@ class UserRoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        Role::find($id)->delete();
-        return response("Role deleted successfully.", 200);
+        $user = $request->user();
+        if($user->can('Delete Role')){
+            Role::find($id)->delete();
+            return response("Role deleted successfully.", 200);
+        }
+        return response('You don\'t have permission yet!', 403);
     }
 }

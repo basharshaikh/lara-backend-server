@@ -41,6 +41,8 @@ class ProjectResource extends JsonResource
             'excerpt' => $this->excerpt,
             'mediaUrl' => $featured,
             'mediaID' => $featured_id,
+            'video_overview' => $this->video_overview_url,
+            'live_url' => $this->project_live_url,
             'created_at' => (new DateTime($this->created_at))->format('Y-m-d H:i:s'),
         ];
     }

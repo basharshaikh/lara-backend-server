@@ -26,13 +26,15 @@ class UserCapabilitiesController extends Controller
      */
     public function store(Request $request)
     {
-        $valid = $request->validate([
-            'name' => 'required|string|max:1000'
-        ]);
-
-        Permission::create(['name' => $valid['name'], 'guard_name' => 'web']);
-        
-        return response("Capability added!", 200);
+        $user = $request->user();
+        if($user->can('Edit Caps')){
+            $valid = $request->validate([
+                'name' => 'required|string|max:1000'
+            ]);
+            Permission::create(['name' => $valid['name'], 'guard_name' => 'web']);
+            return response("Capability added!", 200);
+        }
+        return response('You don\'t have permission yet!', 403);
     }
 
     /**
@@ -44,16 +46,20 @@ class UserCapabilitiesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $valid = $request->validate([
-            'name' => 'required|string|max:1000'
-        ]);
-        $data = [
-            'name' => $valid['name'],
-            'guard_name' => 'web'
-        ];
-        Permission::find($id)->update($data);
-
-        return response("Permission Updated", 200);
+        $user = $request->user();
+        if($user->can('Edit Caps')){
+            $valid = $request->validate([
+                'name' => 'required|string|max:1000'
+            ]);
+            $data = [
+                'name' => $valid['name'],
+                'guard_name' => 'web'
+            ];
+            Permission::find($id)->update($data);
+    
+            return response("Permission Updated", 200);
+        }
+        return response('You don\'t have permission yet!', 403);
     }
 
     /**
@@ -62,9 +68,13 @@ class UserCapabilitiesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        Permission::find($id)->delete();
-        return response("Permission deleted successfully.", 200);
+        $user = $request->user();
+        if($user->can('Delete Caps')){
+            Permission::find($id)->delete();
+            return response("Permission deleted successfully.", 200);
+        }
+        return response('You don\'t have permission yet!', 403);
     }
 }

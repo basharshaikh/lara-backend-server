@@ -20,6 +20,8 @@ class CreateProjectsTable extends Migration
             $table->string('status', '50')->nullable();
             $table->string('ingredients', '500')->nullable();
             $table->string('label', '500')->nullable();
+            $table->string('video_overview_url', '500')->nullable();
+            $table->string('project_live_url', '500')->nullable();
             $table->string('excerpt', '1000')->nullable();
             $table->string('featured_image', '100')->nullable();
             $table->timestamps();

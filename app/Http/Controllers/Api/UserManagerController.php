@@ -38,14 +38,16 @@ class UserManagerController extends Controller
             ]
         ]);
 
-        /**  @var \App\Models\User $user */
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password'])
-        ]);
-
-        return response("User added!", 200);
+        $user = $request->user();
+        if($user->can('Edit User')){
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => bcrypt($data['password'])
+            ]);
+            return response("User added!", 200);
+        }
+        return response('You don\'t have permission yet!', 403);
     }
 
     /**
@@ -78,13 +80,17 @@ class UserManagerController extends Controller
             ]
         ]);
 
-        User::find($id)->update([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password'])
-        ]);
-
-        return response("User Updated!", 200);
+        $user = $request->user();
+        if($user->can('Edit User')){
+            User::find($id)->update([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => bcrypt($data['password'])
+            ]);
+    
+            return response("User Updated!", 200);
+        }
+        return response('You don\'t have permission yet!', 403);
     }
 
     /**
@@ -93,10 +99,14 @@ class UserManagerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        User::find($id)->delete();
-        return response('User Deleted', 200);
+        $user = $request->user();
+        if($user->can('Delete User')){
+            User::find($id)->delete();
+            return response('User Deleted', 200);
+        }
+        return response('You don\'t have permission yet!', 403);
     }
 
 
