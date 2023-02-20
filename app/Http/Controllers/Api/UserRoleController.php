@@ -63,7 +63,7 @@ class UserRoleController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the the role from db
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
