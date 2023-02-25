@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Password;
 
 class UserManagerController extends Controller
@@ -236,5 +237,14 @@ class UserManagerController extends Controller
     // Get total user count
     public function TotalUserCount(){
         return User::all()->count();
+    }
+
+    // auth checker
+    public function authChecker(){
+        $data = [
+            'auth' => Auth::check(),
+            'baz' => 'qux',
+        ];
+        return response()->json($data);
     }
 }

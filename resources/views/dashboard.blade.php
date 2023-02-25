@@ -9,7 +9,7 @@
 
     {{-- Your prfile --}}
     <div class="bg-white shadow-md p-3 flex flex-col order-1 lg:order-2 rounded-md">
-        <h3 class="text-xl mb-4">Welcome <strong>{{ Auth::user()->name }}!</strong></h3>
+        <h3 class="text-xl mb-4">Welcome <strong>{{ Auth::user()->name }}!{{Auth::check()}}</strong></h3>
         <div class="flex">
             <div>
                 <img class="w-[100px] mb-2" src="/storage/14/upwork-gEsG.png">

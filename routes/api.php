@@ -65,10 +65,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/permissions-from-role', [UserManagerController::class, 'PermissionsFromRole']);
     Route::get('/current-user', [UserManagerController::class, 'CurrentUserData']);
     Route::get('/total-user-count', [UserManagerController::class, 'TotalUserCount']);
+    Route::get('/auth-check', [UserManagerController::class, 'authChecker']);
 });
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+
+
 
 
 require __DIR__.'/client.php';
