@@ -243,7 +243,7 @@ class UserManagerController extends Controller
     public function authChecker(){
         $data = [
             'auth' => Auth::check(),
-            'baz' => 'qux',
+            'baz' => auth()->check(),
         ];
         return response()->json($data);
     }
