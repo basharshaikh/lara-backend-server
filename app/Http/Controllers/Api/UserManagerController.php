@@ -247,4 +247,9 @@ class UserManagerController extends Controller
         ];
         return response()->json($data);
     }
+
+    // 
+    public function returnSomeData(){
+        return;
+    }
 }
