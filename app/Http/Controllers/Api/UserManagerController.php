@@ -8,6 +8,10 @@ use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\PersonalAccessToken;
+
+
 
 class UserManagerController extends Controller
 {
@@ -240,16 +244,9 @@ class UserManagerController extends Controller
     }
 
     // auth checker
-    public function authChecker(){
-        $data = [
-            'auth' => Auth::check(),
-            'baz' => auth()->check(),
-        ];
-        return response()->json($data);
-    }
+    public function authChecker(Request $request){
 
-    // 
-    public function returnSomeData(){
-        return;
-    }
+
+    
+    }    
 }

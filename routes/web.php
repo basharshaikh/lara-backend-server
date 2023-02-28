@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Api\BlogController;
 use App\Http\Controllers\Web\ProjectController;
 use App\Http\Controllers\Web\DashboardController;
@@ -23,6 +24,15 @@ use App\Http\Controllers\Api\Client\CommentController;
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth'])->name('dashboard');
+
+Route::get('/clear', function() {
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('config:cache');
+    Artisan::call('view:clear');
+    
+    return "Cleared!";
+ });
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', function () {
