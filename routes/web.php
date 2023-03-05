@@ -1,8 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Api\BlogController;
 use App\Http\Controllers\Web\ProjectController;
 use App\Http\Controllers\Web\DashboardController;
@@ -30,6 +32,18 @@ Route::get('/clear', function() {
     Artisan::call('config:clear');
     Artisan::call('config:cache');
     Artisan::call('view:clear');
+
+    $userIds = DB::table('users')->pluck('id');
+
+    // loop through each user ID
+    foreach ($userIds as $userId) {
+        // generate a new session ID for the user
+        Session::driver()->setId($userId);
+    
+        // flush the user's session data
+        Session::flush();
+        echo "Session Flusing <br>";
+    }
     
     return "Cleared!";
  });
