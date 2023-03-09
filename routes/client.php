@@ -16,6 +16,8 @@ Route::get('/single-project/{project}', [ProjectController::class, 'getSinglePro
 // Blog routes
 Route::get('/all-blogs', [BlogController::class, 'allBlogs']);
 Route::get('/single-blog/{blog:slug}', [BlogController::class, 'singleBlog']);
+Route::get('/all-categories', [BlogController::class, 'blogAllCategories']);
+Route::get('/blog-by-cat/{catID}', [BlogController::class, 'blogByCategory']);
 
 
 // Comment routes
